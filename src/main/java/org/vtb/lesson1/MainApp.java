@@ -46,33 +46,9 @@ public class MainApp {
 
     //    6. Задать пустой целочисленный массив размером 8. С помощью цикла заполнить его значениями 2 5 8 11 14 17 20 23;
     public static int[] fillArray(int[] arr) {
-        for (int i = 0; i < arr.length; i++)
-            switch (i) {
-                case 0:
-                    arr[i] = 2;
-                    break;
-                case 1:
-                    arr[i] = 5;
-                    break;
-                case 2:
-                    arr[i] = 8;
-                    break;
-                case 3:
-                    arr[i] = 11;
-                    break;
-                case 4:
-                    arr[i] = 14;
-                    break;
-                case 5:
-                    arr[i] = 17;
-                    break;
-                case 6:
-                    arr[i] = 20;
-                    break;
-                case 7:
-                    arr[i] = 23;
-                    break;
-            }
+        arr[0] = 2;
+        for (int i = 1; i < arr.length; i++)
+            arr[i] = arr[i-1] + 3;
         return arr;
     }
 
