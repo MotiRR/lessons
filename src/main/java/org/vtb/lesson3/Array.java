@@ -34,6 +34,9 @@ public class Array<E> implements Iterable<E> {
     }
 
     public void remove(int index) throws IndexOutOfBoundsException {
+        if(index >= size || index < 0)
+            throw new IndexOutOfBoundsException(String.format("Index %d out of bounds for length %d", index, a.length));
+        if(index == a.length - 1) a[index] = null;
         for (int i = index; i < a.length - 1; i++)
             a[i] = a[i + 1];
         nElements--;

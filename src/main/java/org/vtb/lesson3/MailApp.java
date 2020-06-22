@@ -35,7 +35,6 @@ public class MailApp {
         participants.add(new Cat("cat", 250, 5));
         participants.add(new Human("human", 300, 15));
         participants.add(new Robot("robot", 400, 2));
-        participants.getElement(9);
     }
 
     public static void checkLets(Array<Participant> participants, Array<Let> lets) {
