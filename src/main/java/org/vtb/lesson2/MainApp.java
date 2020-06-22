@@ -26,13 +26,14 @@ public class MainApp {
 
     public static void fillAnimals(ArrayList<Animal> animals) {
         Animal cat = new Cat("Кошка", false);
-        Animal cat1 = new Cat("Кошка", false);
-        Animal dog = new Dog("Собака");
+        Animal cat1 = new Cat("Кошка", true);
+        Animal dog = new Dog("Бобик");
         Animal tiger = new Tiger("Тигор");
         animals.add(cat);
         animals.add(cat1);
         animals.add(dog);
         animals.add(tiger);
+        Animal.count = 4;
     }
 
     public static void main(String[] args) {

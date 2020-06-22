@@ -1,22 +1,14 @@
 package org.vtb.lesson2.entity;
 
-public class Cat implements Animal{
+public class Cat extends Animal{
 
-    private String name;
     private boolean isSwim;
 
     public Cat(String name, boolean isSwim) {
-        this.name = name;
+        super(name);
         this.isSwim = isSwim;
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
 
     public boolean isSwim() {
         return isSwim;
