@@ -1,9 +1,9 @@
 package org.vtb.lesson3.entity.participant;
 
 public interface Participant {
-    String run(boolean run);
+    boolean run(int runLength, String nameLet);
 
-    String jump(boolean jump);
+    boolean jump(int jumpHeight, String nameLet);
 
     String getName();
 

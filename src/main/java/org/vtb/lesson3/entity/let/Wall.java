@@ -1,5 +1,7 @@
 package org.vtb.lesson3.entity.let;
 
+import org.vtb.lesson3.entity.participant.Participant;
+
 public class Wall implements Let {
 
     private String name;
@@ -21,12 +23,16 @@ public class Wall implements Let {
         this.height = height;
     }
 
-    @Override
     public String getName() {
         return name;
     }
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    @Override
+    public boolean interact(Participant participant) {
+        return participant.jump(height, name);
     }
 }

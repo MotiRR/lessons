@@ -1,5 +1,8 @@
 package org.vtb.lesson3.entity.participant;
 
+import org.vtb.lesson3.entity.let.Road;
+import org.vtb.lesson3.entity.let.Wall;
+
 public class Human implements Participant {
 
     private String name;
@@ -16,13 +19,20 @@ public class Human implements Participant {
     }
 
     @Override
-    public String run(boolean run) {
-        return run ? "Пробежал успешно" : "Не смог пробежать";
+    public boolean run(int runLength, String nameLet) {
+        boolean success = limitRun > runLength;
+        System.out.println(new StringBuilder().append(name).append(" ").append(success ? "Пробежал успешно" : "Не смог пробежать")
+                .append(" ").append(nameLet).toString());
+        return success;
+
     }
 
     @Override
-    public String jump(boolean jump) {
-        return jump ? "Перепрыгнул успешно" : "Не смог перепрыгнуть";
+    public boolean jump(int jumpHeight, String nameLet) {
+        boolean success = limitJump > jumpHeight;
+        System.out.println(new StringBuilder().append(name).append(" ").append(success ? "Перепрыгнул успешно" : "Не смог перепрыгнуть")
+                .append(" ").append(nameLet).toString());
+        return success;
     }
 
     public String getName() {
@@ -50,4 +60,5 @@ public class Human implements Participant {
     public void setLimitJump(int limitJump) {
         this.limitJump = limitJump;
     }
+
 }

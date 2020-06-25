@@ -10,21 +10,6 @@ import org.vtb.lesson3.entity.participant.Robot;
 
 public class MailApp {
 
-    public static boolean checkLet(Participant participant, Let let) {
-        boolean run, jump;
-        if (let instanceof Road) {
-            run = participant.getLimitRun() > ((Road) let).getLength();
-            System.out.printf("Участник %s %s препятствие %s\n", participant.getName(), participant.run(run), let.getName());
-            return run;
-        }
-        if (let instanceof Wall) {
-            jump = participant.getLimitJump() > ((Wall) let).getHeight();
-            System.out.printf("Участник %s %s препятствие %s\n", participant.getName(), participant.jump(jump), let.getName());
-            return jump;
-        }
-        return false;
-    }
-
     public static void fillLets(Array<Let> lets) {
         lets.add(new Road("road 1", 230));
         lets.add(new Wall("wall 1", 10));
@@ -41,7 +26,7 @@ public class MailApp {
 
       for (Participant participant : participants) {
             for (Let let : lets) {
-                if (!checkLet(participant, let)) break;
+                if (!let.interact(participant)) break;
             }
         }
     }
