@@ -24,6 +24,7 @@ public class Box<F extends Fruit> {
     }
 
     public void moveFruit(Box<F> another) {
+        if(this == another) return;
         another.getFruits().addAll(fruits);
         fruits.clear();
     }
