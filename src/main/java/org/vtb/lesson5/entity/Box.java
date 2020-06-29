@@ -14,12 +14,13 @@ public class Box<F extends Fruit> {
         this.fruits = fruits;
     }
 
-    public double getWeight() throws IndexOutOfBoundsException {
+    public double getWeight() {
+        if(fruits.isEmpty()) return 0.0;
         return fruits.get(0).getWeigh() * fruits.size();
     }
 
     public boolean compare(Box<?> another) {
-        return this.getWeight() == another.getWeight();
+        return Math.abs(this.getWeight() - another.getWeight()) < 0.001;
     }
 
     public void moveFruit(Box<F> another) {

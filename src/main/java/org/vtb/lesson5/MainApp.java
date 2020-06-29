@@ -11,8 +11,8 @@ import java.util.Arrays;
 public class MainApp {
 
 
-    private static <T> void swap(T[] arr, int i, int j) throws ArrayIndexOutOfBoundsException {
-        T temp = arr[j];
+    private static void swap(Object[] arr, int i, int j) throws ArrayIndexOutOfBoundsException {
+        Object temp = arr[j];
         arr[j] = arr[i];
         arr[i] = temp;
     }
