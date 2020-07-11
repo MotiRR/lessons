@@ -1,11 +1,7 @@
-package org.vtb.lesson10;
-
-import org.vtb.lesson10.stages.Stage;
-import org.vtb.lesson10.stages.Tunnel;
+package org.vtb.lesson10.wrong;
 
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.CyclicBarrier;
-import java.util.concurrent.Semaphore;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
@@ -24,8 +20,7 @@ public class Car implements Runnable {
     private Lock lock = new ReentrantLock();
     private static AtomicBoolean win = new AtomicBoolean(true);
 
-    private static CyclicBarrier cb;
-    private static Semaphore smp;
+    private CyclicBarrier cb;
 
     public String getName() {
         return name;
@@ -35,16 +30,16 @@ public class Car implements Runnable {
         return speed;
     }
 
-    public Car(Race race, int speed) {
+    public Car(Race race, int speed, CyclicBarrier cb) {
         this.race = race;
         this.speed = speed;
         CARS_COUNT++;
         this.name = "Участник #" + CARS_COUNT;
+        this.cb = cb;
     }
 
     public static void setThread() {
-        cb = new CyclicBarrier(CARS_COUNT);
-        smp = new Semaphore(CARS_COUNT / 2);
+
     }
 
     @Override
@@ -60,18 +55,7 @@ public class Car implements Runnable {
             e.printStackTrace();
         }
         for (int i = 0; i < race.getStages().size(); i++) {
-            Stage stage = race.getStages().get(i);
-            if(stage instanceof Tunnel) {
-                try {
-                    smp.acquire();
-                    stage.overcome(this);
-                } catch (InterruptedException e) {
-                    System.out.format("Exception : %s", e.getMessage());
-                } finally {
-                    smp.release();
-                }
-            }
-            stage.overcome(this);
+            race.getStages().get(i).overcome(this);
         }
 
         if (lock.tryLock() && win.get()) {

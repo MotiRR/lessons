@@ -1,14 +1,18 @@
-package org.vtb.lesson10;
+package org.vtb.lesson10.wrong;
 
 
-import org.vtb.lesson10.stages.Stage;
+import org.vtb.lesson10.wrong.stages.Stage;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.concurrent.CyclicBarrier;
 
 public class Race {
     public static final int COMPETITORS_COUNT = 4;
+
+
+    private CyclicBarrier cb = new CyclicBarrier(COMPETITORS_COUNT);
 
     private List<Stage> stages;
 
@@ -26,7 +30,7 @@ public class Race {
         System.out.println("ВАЖНОЕ ОБЪЯВЛЕНИЕ >>> Подготовка!!!");
         Car[] cars = new Car[COMPETITORS_COUNT];
         for (int i = 0; i < cars.length; i++) {
-            cars[i] = new Car(this, 20 + (int) (Math.random() * 10));
+            cars[i] = new Car(this, 20 + (int) (Math.random() * 10), cb);
             threadCars.add(new Thread(cars[i]));
         }
         Car.setThread();

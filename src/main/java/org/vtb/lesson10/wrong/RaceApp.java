@@ -1,8 +1,8 @@
-package org.vtb.lesson10;
+package org.vtb.lesson10.wrong;
 
 
-import org.vtb.lesson10.stages.Road;
-import org.vtb.lesson10.stages.Tunnel;
+import org.vtb.lesson10.wrong.stages.Road;
+import org.vtb.lesson10.wrong.stages.Tunnel;
 
 public class RaceApp {
     public static void main(String[] args) {

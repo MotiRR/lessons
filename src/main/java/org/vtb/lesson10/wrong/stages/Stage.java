@@ -1,6 +1,6 @@
-package org.vtb.lesson10.stages;
+package org.vtb.lesson10.wrong.stages;
 
-import org.vtb.lesson10.Car;
+import org.vtb.lesson10.wrong.Car;
 
 public abstract class Stage {
     int length;
