@@ -11,7 +11,7 @@ import java.util.List;
 
 public class Reflection<T> {
 
-    public void createQuerySave(T object, Connector con) throws SQLException, IllegalAccessException {
+    public void createQuerySave(T object, Connector con) throws SQLException, IllegalAccessException, NoSuchFieldException {
         Class c = object.getClass();
         if (!c.isAnnotationPresent(DbTable.class)) {
             throw new RuntimeException("Unable to save objects for class " + c.getSimpleName());
@@ -25,19 +25,26 @@ public class Reflection<T> {
         queryBuilder.append(" (");
         // 'INSERT INTO name_class ('
         boolean isDbId = false;
+        Field id = null;
         Field[] fields = c.getDeclaredFields();
         for (Field f : fields) {
             f.setAccessible(true);
-            if (f.isAnnotationPresent(DbId.class))
+            if (f.isAnnotationPresent(DbId.class)) {
+                id = f;
                 isDbId = true;
+            }
             if (f.isAnnotationPresent(DbColumn.class)) {
                 queryBuilder
                         .append(f.getName())
                         .append(", ");
             }
         }
+        List<T> startRows = null;
         if (!isDbId)
             throw new RuntimeException("The table should contain a field with annotation DbId");
+        else {
+            startRows = find(id.getName(), c, con);
+        }
         // 'INSERT INTO name_class (column1, column2, '
         queryBuilder.setLength(queryBuilder.length() - 2);
         // 'INSERT INTO name_class (column1, column2'
@@ -62,8 +69,37 @@ public class Reflection<T> {
                 index++;
             }
         }
-        if (ps.executeUpdate() == 1)
-            System.out.println(String.format("Object of class %s saved", c.getSimpleName()));
+        if (ps.executeUpdate() > 0) {
+            boolean isNewId = false;
+            Object num = null;
+            List<T> endRows = find(id.getName(), c, con);
+            for (T end : endRows) {
+                Object idEnd = id.get(end);
+                for (T st : startRows) {
+                    Object idStart = id.get(st);
+                    if (idEnd == idStart) {
+                        isNewId = true;
+                        break;
+                    }
+                }
+                if (!isNewId) {
+                    num = idEnd;
+                    break;
+                }
+                isNewId = false;
+            }
+            System.out.println(String.format("Object of class %s saved with id = %s", c.getSimpleName(), num));
+        }
+    }
+
+    private List<T> find(String id, Class<T> c, Connector con) throws SQLException, NoSuchFieldException, IllegalAccessException {
+        StringBuilder queryBuilderSelect = new StringBuilder();
+        queryBuilderSelect.append("SELECT ");
+        queryBuilderSelect.append(id);
+        queryBuilderSelect.append(" From ");
+        queryBuilderSelect.append(((DbTable) c.getAnnotation(DbTable.class)).name());
+        PreparedStatement ps = con.getConnection().prepareStatement(queryBuilderSelect.toString());
+        return processRows(ps, c);
     }
 
     public void createQueryDelete(Long id, Class<T> c, Connector con) throws SQLException {

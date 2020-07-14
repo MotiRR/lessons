@@ -19,7 +19,7 @@ public class ReflectionRepository<T> {
     public void save(T object) {
         try {
             reflection.createQuerySave(object, connector);
-        } catch (SQLException | IllegalAccessException throwables) {
+        } catch (SQLException | IllegalAccessException | NoSuchFieldException throwables) {
             throwables.printStackTrace();
         }
     }
