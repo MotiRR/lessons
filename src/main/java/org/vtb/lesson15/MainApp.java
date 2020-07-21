@@ -12,10 +12,10 @@ public class MainApp {
     public static void main(String[] args) {
         FileWorker fileWorker = new FileWorker();
         // 1
-        /*System.out.println(fileWorker
+        System.out.println(fileWorker
                 .countSequence("src\\main\\resources\\task1\\demo.txt", "abcd")); //abc
 
-         */
+
         // 2
         try {
             fileWorker.joinFilesInCatalog("src\\main\\resources\\task2", "src\\main\\resources\\task2\\out.txt");
@@ -33,11 +33,11 @@ public class MainApp {
 //                "src\\main\\resources\\task3\\task3.1\\3.txt",
 //                "src\\main\\resources\\task3\\task3.1\\task3.1.1\\4.txt"));
         // поиск
-        /*try {
+        try {
             fileWorker.findFilesInCatalogByLessSize("src\\main\\resources\\task3", 102400);
         } catch (DirectoryNotFound e) {
             e.printStackTrace();
-        }*/
+        }
 
     }
 
