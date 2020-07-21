@@ -59,8 +59,10 @@ public class FileWorker {
             throw new DirectoryNotFound();
         try(OutputStream out = Files.newOutputStream(outFile, StandardOpenOption.CREATE, StandardOpenOption.APPEND)) {
             Stream<Path> files = Files.list(inPath);
-            List<Path> fileList =  files.collect(Collectors.toList());
-            fileList.remove(outFile);
+            List<Path> fileList = files
+                    .filter(p->!Files.isDirectory(p))
+                    .filter(p->!p.equals(outFile))
+                    .collect(Collectors.toList());
             for(Path file : fileList)
                 Files.copy(file,out);
         } catch (IOException e) {
